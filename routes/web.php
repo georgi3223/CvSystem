@@ -27,6 +27,3 @@ Route::resource('cv', CvController::class);
 Route::get('/report', [ReportController::class, 'index'])->name('report.index');
 Route::post('/report/generate', [ReportController::class, 'generate'])->name('report.generate');
 
-
-// AJAX Route for Adding a New University
-Route::post('/university', [UniversityController::class, 'store'])->name('university.store');
