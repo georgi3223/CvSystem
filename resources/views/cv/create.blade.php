@@ -10,14 +10,14 @@
             </div>
         @endif
         
-        <form action="{{ route('cv.store') }}" method="POST" class="mt-4">
+        <form id="cvForm" method="POST" class="mt-4">
             @csrf
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">First Name:</label>
                 <input type="text" name="first_name" class="mt-1 px-4 py-2 border rounded w-full" required>
             </div>
             
-            <!-- Add fields for last_name, birth_date, and other form elements -->
+            <!-- Add fields for other form elements -->
             
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">University:</label>
@@ -51,26 +51,70 @@
 
     <!-- University Modal -->
     <div id="universityModal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white rounded p-4">
-            <h2 class="text-lg font-semibold mb-2">Add New University</h2>
-            <input type="text" id="newUniversityName" class="border rounded px-2 py-1 w-full mb-2" placeholder="University Name">
-            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="addUniversity()">Add University</button>
-            <button class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400" onclick="closeUniversityModal()">Cancel</button>
-        </div>
+        <!-- Modal content -->
     </div>
 
     <!-- Technology Modal -->
     <div id="technologyModal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white rounded p-4">
-            <h2 class="text-lg font-semibold mb-2">Add New Technology</h2>
-            <input type="text" id="newTechnologyName" class="border rounded px-2 py-1 w-full mb-2" placeholder="Technology Name">
-            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="addTechnology()">Add Technology</button>
-            <button class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400" onclick="closeTechnologyModal()">Cancel</button>
-        </div>
+        <!-- Modal content -->
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+          $(document).ready(function () {
+        // Handle form submission using AJAX
+        $('#cvForm').submit(function (event) {
+            event.preventDefault();
+            
+            // Serialize form data
+            var formData = $(this).serialize();
+
+            // Send AJAX request
+            $.ajax({
+                url: '{{ route("cv.store") }}',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Display success message and reset form
+                    alert('CV created successfully');
+                    $('#cvForm')[0].reset();
+                },
+                error: function (xhr) {
+                    // Display error message
+                    alert('Error creating CV. Please try again.');
+                }
+            });
+        });
+
+        // Add University using AJAX
+        function addUniversity() {
+            var newUniversityName = $('#newUniversityName').val().trim();
+            if (newUniversityName !== '') {
+                var select = $('[name="university_id"]');
+                var newOption = $('<option>', {
+                    text: newUniversityName,
+                    selected: true
+                });
+                select.append(newOption);
+                closeUniversityModal();
+            }
+        }
+
+        // Add Technology using AJAX
+        function addTechnology() {
+            var newTechnologyName = $('#newTechnologyName').val().trim();
+            if (newTechnologyName !== '') {
+                var select = $('[name="technologies[]"]');
+                var newOption = $('<option>', {
+                    text: newTechnologyName,
+                    selected: true
+                });
+                select.append(newOption);
+                closeTechnologyModal();
+            }
+        }
+
+        // Show/Hide Modals
         function showUniversityModal() {
             $('#universityModal').removeClass('hidden');
         }
@@ -87,30 +131,12 @@
             $('#technologyModal').addClass('hidden');
         }
 
-        function addUniversity() {
-            const newUniversityName = $('#newUniversityName').val().trim();
-            if (newUniversityName !== '') {
-                const select = $('[name="university_id"]');
-                const newOption = $('<option>', {
-                    text: newUniversityName,
-                    selected: true
-                });
-                select.append(newOption);
-                closeUniversityModal();
-            }
-        }
-
-        function addTechnology() {
-            const newTechnologyName = $('#newTechnologyName').val().trim();
-            if (newTechnologyName !== '') {
-                const select = $('[name="technologies[]"]');
-                const newOption = $('<option>', {
-                    text: newTechnologyName,
-                    selected: true
-                });
-                select.append(newOption);
-                closeTechnologyModal();
-            }
-        }
+        // Bind modal buttons to functions
+        $('#universityModal').on('click', '.bg-blue-500', addUniversity);
+        $('#technologyModal').on('click', '.bg-blue-500', addTechnology);
+        $('#universityModal, #technologyModal').on('click', '.bg-gray-300', function () {
+            $(this).closest('.bg-white').addClass('hidden');
+        });
+    });
     </script>
 @endsection
