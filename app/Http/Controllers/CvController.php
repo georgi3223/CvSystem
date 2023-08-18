@@ -11,14 +11,9 @@ class CvController extends Controller
 {
     public function index()
     {
-        $cvs = Cv::with('candidate', 'university')->get();
-        $candidates = Candidate::all();
-        $universities = University::all();
-        $technologies = Technology::all();
-
-        return view('cv.index', compact('cvs', 'candidates', 'universities', 'technologies'));
+        $cvs = Cv::with(['candidate', 'university', 'skills'])->get();
+        return view('cv.index', compact('cvs'));
     }
-
     public function create()
     {
         $universities = University::all();

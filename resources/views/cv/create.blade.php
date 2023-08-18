@@ -90,46 +90,26 @@
         function addUniversity() {
             const newUniversityName = $('#newUniversityName').val().trim();
             if (newUniversityName !== '') {
-                // Perform AJAX request to add university to database
-                // You can use $.ajax or $.post here
-                // You can use $.ajax or $.post here
-                $.post('{{ route('universities.store') }}', { name: newUniversityName, _token: '{{ csrf_token() }}' })
-                    .done(function(response) {
-                        // Add the new option to the select element
-                        const select = $('[name="university_id"]');
-                        const newOption = $('<option>', {
-                            value: response.id,
-                            text: response.name,
-                            selected: true
-                        });
-                        select.append(newOption);
-                        closeUniversityModal();
-                    })
-                    .fail(function(error) {
-                        console.error('Failed to add university:', error);
-                    });
+                const select = $('[name="university_id"]');
+                const newOption = $('<option>', {
+                    text: newUniversityName,
+                    selected: true
+                });
+                select.append(newOption);
+                closeUniversityModal();
             }
+        }
 
         function addTechnology() {
             const newTechnologyName = $('#newTechnologyName').val().trim();
             if (newTechnologyName !== '') {
-                // Perform AJAX request to add technology to database
-                // You can use $.ajax or $.post here
-                $.post('{{ route('technologies.store') }}', { name: newTechnologyName, _token: '{{ csrf_token() }}' })
-                    .done(function(response) {
-                        // Add the new option to the select element
-                        const select = $('[name="technologies[]"]');
-                        const newOption = $('<option>', {
-                            value: response.id,
-                            text: response.name,
-                            selected: true
-                        });
-                        select.append(newOption);
-                        closeTechnologyModal();
-                    })
-                    .fail(function(error) {
-                        console.error('Failed to add technology:', error);
-                    });
+                const select = $('[name="technologies[]"]');
+                const newOption = $('<option>', {
+                    text: newTechnologyName,
+                    selected: true
+                });
+                select.append(newOption);
+                closeTechnologyModal();
             }
         }
     </script>

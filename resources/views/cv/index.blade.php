@@ -1,30 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="p-6">
-        <h1 class="text-2xl font-semibold">CV List</h1>
-        
-        <table class="table-auto w-full mt-4">
-            <thead>
+<div class="max-w-4xl mx-auto bg-white rounded shadow p-6">
+    <h2 class="text-2xl font-semibold mb-4">CV List</h2>
+    <table class="w-full border-collapse border border-gray-300">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="border p-2">Candidate Name</th>
+                <th class="border p-2">University</th>
+                <th class="border p-2">Skills</th>
+                <!-- Add more table headers for other CV information -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($cvs as $cv)
                 <tr>
-                    <th class="px-4 py-2">First Name</th>
-                    <th class="px-4 py-2">Last Name</th>
-                    <th class="px-4 py-2">Birth Date</th>
-                    <th class="px-4 py-2">University</th>
-                    <!-- Add more columns if needed -->
+                    <td class="border p-2">{{ $cv->candidate->name }}</td>
+                    <td class="border p-2">{{ $cv->university->name }}</td>
+                    <td class="border p-2">{{ implode(', ', $cv->skills->pluck('name')->toArray()) }}</td>
+                    <!-- Add more table cells for other CV information -->
                 </tr>
-            </thead>
-            <tbody>
-                @foreach($cvs as $cv)
-                    <tr>
-                        <td class="px-4 py-2">{{ $cv->candidate->first_name }}</td>
-                        <td class="px-4 py-2">{{ $cv->candidate->last_name }}</td>
-                        <td class="px-4 py-2">{{ $cv->candidate->birth_date }}</td>
-                        <td class="px-4 py-2">{{ $cv->university->name }}</td>
-                        <!-- Add more columns if needed -->
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 @endsection
