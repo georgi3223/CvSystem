@@ -9,6 +9,7 @@
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}" defer></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js"></script>
   <script src="jquery-3.6.4.min.js"></script>
  </head>
  <body class="font-sans antialiased">
