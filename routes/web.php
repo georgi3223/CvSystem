@@ -6,22 +6,15 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CvController;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('layouts.app');
 });
 
-Route::resource('cv', CvController::class);
+Route::get('/cvs', 'App\Http\Controllers\CvController@index')->name('cv.index');
+Route::get('/cvs/create', 'App\Http\Controllers\CvController@create')->name('cv.create');
+Route::post('/cvs', 'App\Http\Controllers\CvController@store')->name('cv.store');
+
 
 // Report Generation Routes
 Route::get('/report', [ReportController::class, 'index'])->name('report.index');

@@ -1,4 +1,6 @@
-@extends('layouts.app') @section('content') <div class="max-w-4xl mx-auto bg-white rounded shadow p-6">
+@extends('layouts.app') @section('content') 
+<div class="max-w-4xl mx-auto bg-white rounded shadow p-6 ">
+    
  <h2 class="text-2xl font-semibold mb-4">CV List</h2>
  <table class="w-full border-collapse border border-gray-300">
   <thead>
@@ -16,4 +18,8 @@
     <!-- Add more table cells for other CV information -->
    </tr> @endforeach </tbody>
  </table>
-</div> @endsection
+ <a href="{{ route('cv.create') }}" class=" m-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    Create CV
+</a>
+</div>
+ @endsection
